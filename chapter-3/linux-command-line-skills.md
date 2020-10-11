@@ -1,89 +1,64 @@
 # Chapter 5 - Command Line Skills
 
-## 5.1 Introduction
-
-Most consumer operating systems are designed to shield the user from the ins and outs of the CLI. The Linux community is different in that it positively celebrates the CLI for its power, speed and ability to accomplish a vast array of tasks with a single command line instruction.
-
-When a user first encounters the CLI, they can find it challenging because it requires memorizing a dizzying amount of commands and their options. However, once a user has learned the structure of how commands are used, where the necessary files and directories are located and how to navigate the hierarchy of a file system, they can be immensely productive. This capability provides more precise control, greater speed and the ability to automate tasks more easily through scripting.
-
-Furthermore, by learning the CLI, a user can easily be productive almost instantly on ANY flavor or distribution of Linux, reducing the amount of time needed to familiarize themselves with a system because of variations in a GUI.
-
-
-
 ## 5.2 Shell
 
-Once a user has entered a command the terminal then accepts what the user has typed and passes it to a shell. The **shell** is the command line interpreter that translates commands entered by a user into actions to be performed by the operating system. If output is produced by the command, then text is displayed in the terminal. If problems with the command are encountered, an error message is displayed.
+> Once a user has entered a command the terminal then accepts what the user has typed and passes it to a shell.
 
-The Linux environment allows the use of many different shells, some of which have been around for many years. The most commonly-used shell for Linux distributions is called the **Bash** shell. Bash provides many advanced features, such as command history and inline editing, which allows a user to easily re-execute previously executed commands or a variation of them via simple editing.
+**shell** is the command line interpreter that translates commands entered by a user into actions to be performed by the operating system. 
+- If output is produced by the command, then text is displayed in the terminal.
+- If problems with the command are encountered, an error message is displayed.
 
-The Bash shell also has other popular features, a few of which are listed below:
+> The Linux environment allows the use of many different shells, some of which have been around for many years. The most commonly-used shell for Linux distributions is called the **Bash** shell.
+
+The Bash shell many popular features :
 
 - **Scripting:** The ability to place commands in a file and then interpret (effectively use Bash to execute the contents of) the file, resulting in all of the commands being executed. This feature also has some programming features, such as conditional statements and the ability to create functions (AKA subroutines).
 - **Aliases:** The ability to create short nicknames for longer commands.
 - **Variables:** Used to store information for the Bash shell and for the user. These variables can be used to modify how commands and features work as well as provide vital system information.
 
-Bash has an extensive feature list; this is only a sampling of its capabilities.
 
-When a terminal application is run, and a shell appears, displaying an important part of the interface—the prompt. Not only is the prompt there to indicate that commands can be run, but it also conveys useful information to the user. The **prompt** is fully configurable and can be as sparse or as full-featured as is practical and useful.
 
-The structure of the prompt may vary between distributions, but typically contains information about the user and the system. Below is a common prompt structure:
+**prompt** : When a terminal application is run, and a shell appears, displaying an important part of the interface—the prompt. 
+- there to indicate that commands can be run
+- conveys useful information to the user. 
+
+> The structure of the prompt may vary between distributions, but typically contains information about the user and the system. Below is a common prompt structure:
 
 ```
 sysadmin@localhost:~$
 ```
 
 The prompt shown contains the following information:
-
 1. **User Name:**
-
-   ```
-   sysadmin@localhost:~$
-   ```
-
 2. **System Name:**
-
-   ```
-   sysadmin@localhost:~$
-   ```
-
 3. **Current Directory:**
 
-   ```
-   sysadmin@localhost:~$
-   ```
-
-The `~` symbol is used as shorthand for the user's home directory. Typically the home directory for the user is under the `/home` directory and named after the user account name; for example, `/home/sysadmin`.
+> The `~` symbol is used as shorthand for the user's home directory. Typically the home directory for the user is under the `/home` directory and named after the user account name; for example, `/home/sysadmin`.
 
 ## 5.3 Commands
 
-What is a command? The simplest answer is that a command is a software program that, when executed on the CLI, performs an action on the computer.
-
-To execute a command, the first step is to type the name of the command. Click in the terminal on the right. Type `ls` and hit **Enter**. The result should resemble the example below:
+deifnition :  a software program that, when executed on the CLI, performs an action on the computer.
 
 ```bash
 sysadmin@localhost:~$ ls
 Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 ```
 
-Many commands can be used by themselves with no further input. Some commands require additional input to run correctly. This additional input comes in two forms: options and arguments.
+Many commands can be used by themselves with no further input. Some commands require additional input to run correctly. This additional input comes in two forms:
+- options
+- arguments.
 
 The typical format for a command is as follows:
 
 ```bash
 command [options] [arguments]
 ```
+- **Options** are used to modify the behavior of a command 
+- **arguments** are used to provide additional information (such as a filename or a username). 
 
-- **Options** are used to modify the core behavior of a command while 
-
-- **arguments** are used to provide additional information (such as a filename or a username). Each option and argument is normally separated by a space, although options can often be combined.
-
-Keep in mind that Linux is case-sensitive. Commands, options, arguments, variables, and file names must be entered exactly as shown.
+> Each option and argument is normally separated by a space, although options can often be combined.
 
 ## 5.3.1 Arguments
-
-```
-command [options] [arguments]
-```
 
 An argument can be used to specify something for the command to act upon. 
 
@@ -107,10 +82,6 @@ ssh_host_dsa_key     ssh_host_ecdsa_key.pub   ssh_import_id
 ```
 
 ## 5.3.2 Options
-
-```bash
-command [options] [arguments]
-```
 
 options expand or modify the way a command behaves. 
 
@@ -166,22 +137,16 @@ sysadmin@localhost:~$ ls -lh /usr/bin/perl
 -rwxr-xr-x 2 root root 11K Feb  4  2018 /usr/bin/perl
 ```
 
-Options are often single letters; however, sometimes they are words or phrases as well. Typically, older commands use single letters while newer commands use complete words for options. 
+Options are mostly single letters but sometimes they are words or phrases. Typically, older = single letters | newer = complete words for options. 
 
 - Single-letter options are preceded by a single dash `-` character, like the `-h` option. 
-
 - Full-word options are preceded by two dash `--` characters.
 
 eg. The `-h` option also has an equivalent full-word form; the `--human-readable` option.
 
-```bash
-sysadmin@localhost:~$ ls -l --human-readable /usr/bin/perl                        
--rwxr-xr-x 2 root root 11K Feb  4  2018 /usr/bin/perl
-```
-
 ## 5.3.3 History
 
-When a command is executed in the terminal, it is stored in a history list. This is designed to make it easy to execute the same command, later eliminating the need to retype the entire command.
+When a command is executed in the terminal, it is stored in a history list.
 
 - **Up Arrow ↑** key displays the previous command on the prompt line.
 - When the desired command is located, the **Left Arrow ←** and **Right Arrow →** keys can position the cursor for editing. 
@@ -197,11 +162,7 @@ Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 sysadmin@localhost:~$ cal 5 2030                                  
      May 2030                                                                  
 Su Mo Tu We Th Fr Sa                                                            
-          1  2  3  4                                                            
- 5  6  7  8  9 10 11                                                            
-12 13 14 15 16 17 18                                                            
-19 20 21 22 23 24 25                                                            
-26 27 28 29 30 31                                                               
+          1  2  3  4  ...                                                                                                                 
 sysadmin@localhost:~$ history                                   
     1  date                                                       
     2  ls                                                      
@@ -211,7 +172,7 @@ sysadmin@localhost:~$ history
 
 If the desired command is in the list that the `history` command generates
 
-:man_technologist:  `!` character and then the number next to the command to execute a command listed in history
+👨‍💻  `!` character and then the number next to the command to execute a command listed in history
 
 ef. to execute the `cal` command again:
 
@@ -225,13 +186,10 @@ sysadmin@localhost:~$ !3
 cal 5 2030                                                        
      May 2030                                                                  
 Su Mo Tu We Th Fr Sa                                                            
-          1  2  3  4                                                            
- 5  6  7  8  9 10 11                                                            
-12 13 14 15 16 17 18                                                            
-19 20 21 22 23 24 25                                                            
+          1  2  3  4  ...                                                         
 ```
 
-:man_technologist: If the `history` command is passed a number as an argument, it outputs that number of previous commands from the history list. 
+👨‍💻  If the `history` command is passed a number as an argument, it outputs that number of previous commands from the history list. 
 
 ```bash
 sysadmin@localhost:~$ history 3
@@ -240,7 +198,7 @@ sysadmin@localhost:~$ history 3
     8  history 3
 ```
 
-:man_technologist: ‌⁠⁠ To execute the nth command from the bottom of the history list, type `!-n` and hit Enter.
+👨‍💻  To execute the nth command from the bottom of the history list, type `!-n` and hit Enter.
 
 ```bash
 sysadmin@localhost:~$ !-3                                                       
@@ -248,7 +206,7 @@ date
 Wed Dec 12 04:31:55 UTC 2018 
 ```
 
-:man_technologist: To execute the most recent command type `!!` and hit **Enter**:
+👨‍💻  To execute the most recent command type `!!` and hit **Enter**:
 
 ```bash
 sysadmin@localhost:~$ date                                                      
@@ -258,7 +216,7 @@ date
 Wed Dec 12 04:32:38 UTC 2018
 ```
 
-:man_technologist: To execute the most recent iteration of a specific command, type `!` followed by the name of the command and hit **Enter**. For example, to execute the most recent `ls` command:
+👨‍💻  To execute the most recent iteration of a specific command, type `!` followed by the name of the command and hit **Enter**. For example, to execute the most recent `ls` command:
 
 ```bash
 sysadmin@localhost:~$ !ls                                                       
@@ -268,12 +226,11 @@ sysadmin
 
 ## 5.4 Variables
 
-A variable is a feature that allows the user or the shell to store data. This data can be used to provide critical system information or to change the behavior of how the Bash shell (or other commands) work. Variables are given names and stored temporarily in memory. There are two types of variables used in the Bash shell: 
+A variable is a feature that allows the user or the shell to store data. Variables are given names and stored temporarily in memory. 
 
+There are two types of variables used in the Bash shell: 
 - local
-- environment.
-
-
+- environment
 
 ## 5.4.1 Local Variables
 
@@ -282,24 +239,16 @@ A variable is a feature that allows the user or the shell to store data. This da
 
 * When the user closes a terminal window or shell, all of the variables are lost. 
 
-- They are often associated with user-based tasks 
-- lowercase by convention.
-
-:man_technologist: ​To set the value of a variable, use the following assignment expression. If the variable already exists, the value of the variable is modified. If the variable name does not already exist, the shell creates a new local variable and sets the value:
 
 ```bash
 variable=value
 ```
 
-The following example creates a local variable named `variable1` and assigns it a value of `Something`:
+- The following example creates a local variable named `variable1` and assigns it a value of `Something`:
+- `echo` command is used to display output in the terminal. To display the value of the variable, use a dollar sign `$` character followed by the variable name as an argument to the `echo` command:
 
 ```bash
 sysadmin@localhost:~$ variable1='Something'
-```
-
-:man_technologist: `echo` command is used to display output in the terminal. To display the value of the variable, use a dollar sign `$` character followed by the variable name as an argument to the `echo` command:
-
-```bash
 sysadmin@localhost:~$ echo $variable1                                   
 Something
 ```
@@ -323,7 +272,7 @@ sysadmin@localhost:~$ echo $HISTSIZE
 500  
 ```
 
-:man_technologist: the `env` command outputs a list of the environment variables. 
+👨‍💻 the `env` command outputs a list of the environment variables. 
 
 Because the output of the `env` command can be quite long, the following examples use a text search to filter that output. In a previous example `variable1` was created as a local variable, so the following search in the environment variables results in no output:
 
@@ -331,60 +280,41 @@ Because the output of the `env` command can be quite long, the following example
 sysadmin@localhost:~$ env | grep variable1                              
 ```
 
-:man_technologist: The pipe `|` character passes the output of the `env` command to the `grep` command, which searches the output.
-
-:man_technologist: The `export` command is used to turn a local variable into an environment variable.
+- 👨‍💻 The pipe `|` character passes the output of the `env` command to the `grep` command, which searches the output.
+- 👨‍💻 The `export` command is used to turn a local variable into an environment variable.
 
 ```bash
 export variable
 ```
 
-After exporting `variable1`, it is now an environment variable. It is now found in the search through the environment variables:
-
+- After exporting `variable1`, it is now an environment variable. It is now found in the search through the environment variables:
+- The `export` command can also be used to make a variable an environment variable upon its creation by using the assignment expression as the argument:
+- exported variables can removed by using the `unset` command
 ```bash
 sysadmin@localhost:~$ export variable1                                  
 sysadmin@localhost:~$ env | grep variable1
 variable1=Something
-```
-
-The `export` command can also be used to make a variable an environment variable upon its creation by using the assignment expression as the argument:
-
-```bash
 sysadmin@localhost:~$ export variable2='Else'                           
 sysadmin@localhost:~$ env | grep variable2                             
 variable2=Else
-```
+sysadmin@localhost:~$ unset variable2    
+sysadmin@localhost:~$ echo $variable2 
 
-To change the value of an environment variable, use the assignment expression:
-
-```bash
-sysadmin@localhost:~$ variable1=$variable1' '$variable2                
-sysadmin@localhost:~$ echo $variable1                                   
-Something Else
-```
-
-:man_technologist: Exported variables can be removed using the `unset` command:
-
-```bash
-sysadmin@localhost:~$ unset variable2
 ```
 
 ## 5.4.3 Path Variable
 
 One of the most important Bash shell variables to understand is the `PATH` variable. 
 
-- It contains a list that defines which directories the shell looks in to find commands. If a valid command is entered and the shell returns a "command not found" error, it is because the Bash shell was unable to locate a command by that name in any of the directories included in the path. 
+- It contains a list that defines which directories the shell looks in to find commands.
+> If a valid command is entered and the shell returns a "command not found" error, it is because the Bash shell was unable to locate a command in any of the directories included in the path. 
 - The following command displays the path of the current shell: `echo $PATH`
 
 ```bash
 sysadmin@localhost:~$ echo $PATH                                        
 /home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
-sysadmin@localhost:~$
-```
 
-Each directory in the list is separated by a colon `:` character. Based on the preceding output, the path contains the following directories. The shell will check the directories in the order they are listed:
-
-```bash
+# Each directory in the list is separated by a colon `:` character. Based on the preceding output, the path contains the following directories. The shell will check the directories in the order they are listed:
 /home/sysadmin/bin
 /usr/local/sbin
 /usr/local/bin
@@ -393,27 +323,17 @@ Each directory in the list is separated by a colon `:` character. Based on the p
 /sbin
 /bin
 /usr/games
+
+sysadmin@localhost:~$ zed                                              
+-bash: zed: command not found 
 ```
 
 Each of these directories is represented by a path. A path is a list of directories separated by the / character. If you think of the filesystem as a map, paths are the directory addresses, which include step-by-step navigation directions; they can be used to indicate the location of any file within the filesystem. For example, `/home/sysadmin` is a path to the home directory:
 
 ![img](https://ndg-content-dev.s3.amazonaws.com/media/images/linux-essentials-v2/home_directory.png)
 
-Directories and paths will be covered in detail later in the course.
-
-If the command is not found in any directory listed in the `PATH` variable, then the shell returns an error:
-
-```bash
-sysadmin@localhost:~$ zed                                              
--bash: zed: command not found                                           
-sysadmin@localhost:~$
-```
-
 ‌⁠⁠ If custom software is installed on the system it may be necessary to modify the `PATH` to make it easier to execute these commands. 
-
-
-
-:man_technologist: add to the path ​eg, the following will add and verify the `/usr/bin/custom` directory to the `PATH` variable:
+👨‍💻 add to the path ​eg, the following will add and verify the `/usr/bin/custom` directory to the `PATH` variable:
 
 ```bash
 sysadmin@localhost:~$ PATH=/usr/bin/custom:$PATH                        
@@ -421,15 +341,13 @@ sysadmin@localhost:~$ echo $PATH
 /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games                                              
 ```
 
-When updating the `PATH` variable, always include the current path, so as not to lose access to commands located in those directories. This can be accomplished by appending `$PATH` to the value in the assignment expression. Recall that a variable name preceded by a dollar sign represents the value of the variable.
-
-
+> When updating the `PATH` variable **always include the current path**, so as not to lose access to commands located in those directories. This can be accomplished by appending `$PATH` to the value in the assignment expression. Recall that a variable name preceded by a dollar sign represents the value of the variable.
 
 ## 5.5 Command Types
 
-:man_technologist: One way to learn more about a command is to look at where it comes from. The `type` command can be used to determine information about command type.
+👨‍💻 One way to learn more about a command is to look at where it comes from. The `type` command can be used to determine information about command type.
 
-```
+```bash
 type command
 ```
 
@@ -441,77 +359,58 @@ There are several different sources of commands within the shell of your CLI inc
 - functions.
 
 
-
-## 5.5.1 Internal Commands
-
-Also called built-in commands, internal commands are built into the shell itself. A good example is the `cd` (change directory) command as it is part of the Bash shell. When a user types the `cd` command, the Bash shell is already executing and knows how to interpret it, requiring no additional programs to be started.
-
-The `type` command identifies the `cd` command as an internal command:
-
 ```bash
 sysadmin@localhost:~$ type cd                                     
 cd is a shell builtin
+sysadmin@localhost:~$ type cal                                      
+cal is /usr/bin/cal
+sysadmin@localhost:~$ type ll                                     
+ll is aliased to `ls -alF`
 ```
 
-## 5.5.2 External Commands
+**Internal Commands / built-in commands**
+
+internal commands are built into the shell itself. A good example is the `cd` (change directory) command as it is part of the Bash shell. When a user types the `cd` command, the Bash shell is already executing and knows how to interpret it, requiring no additional programs to be started.
+
+**External Commands**
 
 External commands are stored in files that are searched by the shell. If a user types the `ls` command, then the shell searches through the directories that are listed in the `PATH` variable to try to find a file named `ls` that it can execute.
 
 If a command does not behave as expected or if a command is not accessible that should be, it can be beneficial to know where the shell is finding the command or which version it is using. It would be tedious to have to manually look in each directory that is listed in the `PATH` variable. 
 
-:man_technologist: use the `which` command to display the full path to the command in question:
+👨‍💻 use the `which` command to display the full path to the command in question: The `which` command searches for the location of a command by searching the `PATH` variable.
+- External commands can also be executed by typing the complete path to the command. For example, to execute the `ls` command:
 
 ```bash
 which command
-```
-
-The `which` command searches for the location of a command by searching the `PATH` variable.
-
-```bash
 sysadmin@localhost:~$ which ls                                       
 /bin/ls                                                               
 sysadmin@localhost:~$ which cal                                        
 /usr/bin/cal
-```
-
-External commands can also be executed by typing the complete path to the command. For example, to execute the `ls` command:
-
-```bash
 sysadmin@localhost:~$ /bin/ls                                                   
 Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 ```
 
-For external commands, the `type` command displays the location of the command:
-
-```bash
-sysadmin@localhost:~$ type cal                                      
-cal is /usr/bin/cal
-```
-
-In some cases the output of the `type` command may differ significantly from the output of the `which` command:
+> In some cases the output of the `type` command may differ significantly from the output of the `which` command:
+> Using the `-a` option of the `type` command displays all locations that contain the command named:
 
 ```bash
 sysadmin@localhost:~$ type echo                                     
 echo is a shell builtin
 sysadmin@localhost:~$ which echo                                        
 /bin/echo
-```
-
-Using the `-a` option of the `type` command displays all locations that contain the command named:
-
-```bash
 sysadmin@localhost:~$ type -a echo                                      
 echo is a shell builtin                                                
 echo is /bin/echo
 ```
 
-## 5.5.3 Aliases
+**Aliases**
 
 An alias can be used to map longer commands to shorter key sequences. When the shell sees an alias being executed, it substitutes the longer sequence before proceeding to interpret commands.
 
 For example, the command `ls -l` is commonly aliased to `l` or `ll`. Because these smaller commands are easier to type, it becomes faster to run the `ls -l` command line.
 
-:man_technologist: To determine what aliases are set on the current shell use the `alias` command:
+👨‍💻 To determine what aliases are set on the current shell use the `alias` command:
 
 ```bash
 sysadmin@localhost:~$ alias                                             
@@ -524,60 +423,41 @@ alias ll='ls -alF'
 alias ls='ls --color=auto'
 ```
 
-The aliases from the previous examples were created by initialization files. These files are designed to make the process of creating aliases automatic.
+The aliases from the previous examples were created by **initialization files**. These files are designed to make the process of creating aliases automatic.
 
-:man_technologist: New aliases can be created using the following format, where `name` is the name to be given the alias and `command` is the command to be executed when the alias is run.
-
-```bash
-alias name=command
-```
+👨‍💻 New aliases can be created using the following format, where `name` is the name to be given the alias and `command` is the command to be executed when the alias is run.
 
 For example, the `cal 2019` command displays the calendar for the year 2019. Suppose you end up running this command often. Instead of executing the full command each time, you can create an alias called `mycal` and run the alias, as demonstrated in the following graphic:
 
-```bash
+```bash terminal
+alias name=command
 sysadmin@localhost:~$ alias mycal="cal 2019"                                    
-sysadmin@localhost:~$ mycal                                                     
+sysadmin@localhost:~$ mycal           
 ```
 
 - Once the shell is closed, the new aliases are lost. 
 - each shell has its own aliases, so aliases created in one shell won’t be available in a new shell that’s opened.
 
-:man_technologist: The `type` command can identify aliases to other commands:
 
-```bash
-sysadmin@localhost:~$ type ll                                          
-ll is aliased to `ls -alF'                                              
-sysadmin@localhost:~$ type -a ls                                          
-ls is aliased to `ls --color=auto'
-ls is /bin/ls  
-```
-
-The output of these commands indicates that `ll` is an alias for `ls -alF`, and even `ls` is an alias for `ls --color=auto`.
-
-## 5.5.4 Functions
-
-Functions can also be built using existing commands to either create new commands, or to override commands built-in to the shell or commands stored in files. Aliases and functions are normally loaded from the initialization files when the shell first starts.
+> **Functions** can also be built using existing commands to either create new commands, or to override commands built-in to the shell or commands stored in files. Aliases and functions are normally loaded from the **initialization files** when the shell first starts.
 
 ## 5.6 Quoting
 
 Quotation marks are used throughout Linux administration and most computer programming languages to let the system know that the information contained within the quotation marks should either be ignored or treated in a way that is very different than it would normally be treated. There are three types of quotes that have special significance to the Bash shell: 
 
 - double quotes `"`
--  single quotes `'`
-- back quotes ```. 
+- single quotes `'`
+- back quotes `
 
 Each set of quotes alerts the shell not to treat the text within the quotes in the normal way.
 
 ## 5.6.1 Double Quotes
 
 - Double quotes stop the shell from interpreting some metacharacters (special characters), including glob characters.
-
-- Glob characters, also called wild cards, are symbols that have special meaning to the shell; they are interpreted by the shell itself before it attempts to run any command. Glob characters include the -
+- **Glob characters**, also called wild cards, are symbols that have special meaning to the shell; they are interpreted by the shell itself before it attempts to run any command. Glob characters include the 
   - asterisk `*` character
   - the question `?` mark character
   - the brackets `[ ]`, among others.
-
-- Within double quotes an asterisk is just an asterisk, a question mark is just a question mark, and so on, which is useful when you want to display something on the screen that is normally a special character to the shell. In the `echo` command below, the Bash shell doesn't convert the glob pattern into filenames that match the pattern:
 
 ```bash
 sysadmin@localhost:~$ echo "The glob characters are *, ? and [ ]"      
@@ -595,13 +475,10 @@ The path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/
 
 Single quotes prevent the shell from doing any interpreting of special characters, including globs, variables, command substitution and other metacharacters that have not been discussed yet.
 
-For example, to make the `$` character simply mean a `$`, rather than it acting as an indicator to the shell to look for the value of a variable, execute the second command displayed below:
-
 ```bash
-sysadmin@localhost:~$ echo The car costs $100                           
-The car costs 00                                                        
-sysadmin@localhost:~$ echo 'The car costs $100'                        
-The car costs $100
+sysadmin@localhost:~$ car=porsche                                     
+sysadmin@localhost:~$ echo '$car'                     
+$car
 ```
 
 ## 5.6.3 Backslash Character
@@ -629,8 +506,7 @@ The service costs $100 and the path is $PATH
 
 But what if you want to have `$PATH` treated as a variable and `$1` not?
 
-use a backslash `\` character in front of the dollar sign `$` character to prevent the shell from interpreting it. The command below demonstrates using the `\` character:
-
+use a backslash `\` character in front of the dollar sign `$` character to prevent the shell from interpreting it.
 ```bash
 sysadmin@localhost:~$ echo The service costs \$1 and the path is $PATH
 The service costs $1 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
@@ -638,26 +514,18 @@ The service costs $1 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/loc
 
 ## 5.6.4 Backquotes
 
-Backquotes, or backticks, are used to specify a command within a command, a process called command substitution. This allows for powerful and sophisticated use of commands.
+Backquotes, or backticks, are used to specify a command within a command, a process called **command substitution**. 
 
-While it may sound confusing, an example should make things more clear. To begin, note the output of the `date` command:
+- the same can be achieved using `$( )`
 
 ```
 sysadmin@localhost:~$ date                                           
 Mon Nov  4 03:35:50 UTC 2018
-```
-
-Now, note the output of the `echo` command:
-
-```
 sysadmin@localhost:~$ echo Today is date                               
 Today is date
-```
-
-In the previous command, the word `date` is treated as regular text, and the shell passes `date` to the `echo` command. To execute the `date` command and have the output of that command sent to the `echo` command, put the `date` command in between two backquote characters:
-
-```bash
 sysadmin@localhost:~$ echo Today is `date`                         
+Today is Mon Nov 4 03:40:04 UTC 2018
+sysadmin@localhost:~$ echo Today is $(date)                         
 Today is Mon Nov 4 03:40:04 UTC 2018
 ```
 
@@ -672,8 +540,6 @@ command1; command2; command3
 ```
 
 The semicolon `;` character can be used to run multiple commands, one after the other. Each command runs independently and consecutively; regardless of the result of the first command, the second command runs once the first has completed, then the third and so on.
-
-For example, to print the months of January, February and March of 2030, execute the following command:
 
 ```bash
 sysadmin@localhost:~$ cal 1 2030; cal 2 2030             
@@ -832,7 +698,7 @@ DESCRIPTION
               do not ignore entries starting with .                             
 ```
 
-:man_technologist: To exit viewing a man page, use the **Q** key.
+👨‍💻 To exit viewing a man page, use the **Q** key.
 
 > **Consider This**
 >
@@ -1097,7 +963,7 @@ Man pages are easily distinguished from commands as they are typically compresse
 
 The `whereis` command is specifically designed to find commands and man pages. While this is useful, it is often necessary to find a file or directory, not just files that are commands or man pages.
 
-:man_technologist: To find any file or directory, use the `locate` command. This command searches a database of all files and directories that were on the system when the database was created. Typically, the command to generate this database is run nightly.
+👨‍💻 To find any file or directory, use the `locate` command. This command searches a database of all files and directories that were on the system when the database was created. Typically, the command to generate this database is run nightly.
 
 ```
 sysadmin@localhost:~$ locate gshadow                                   
