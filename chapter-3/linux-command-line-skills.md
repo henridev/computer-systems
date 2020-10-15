@@ -1506,15 +1506,15 @@ drwxr-xr-x 1 root   root   4096 Jul 19 06:52 apt
 
 The first character of each line indicates the type of file. The file types are:
 
-| Symbol | File Type      | Description                                                  |
-| :----- | :------------- | :----------------------------------------------------------- |
-| `d`    | directory      | A file used to store other files.                            |
+| Symbol | File Type      | Description                                                                |
+| :----- | :------------- | :------------------------------------------------------------------------- |
+| `d`    | directory      | A file used to store other files.                                          |
 | `-`    | regular file   | Includes readable files, images files, binary files, and compressed files. |
-| `l`    | symbolic link  | Points to another file.                                      |
-| `s`    | socket         | Allows for communication between processes.                  |
-| `p`    | pipe           | Allows for communication between processes.                  |
-| `b`    | block file     | Used to communicate with hardware.                           |
-| `c`    | character file | Used to communicate with hardware.                           |
+| `l`    | symbolic link  | Points to another file.                                                    |
+| `s`    | socket         | Allows for communication between processes.                                |
+| `p`    | pipe           | Allows for communication between processes.                                |
+| `b`    | block file     | Used to communicate with hardware.                                         |
+| `c`    | character file | Used to communicate with hardware.                                         |
 
 The first file `alternatives.log` is a regular file (`-`), while the second file `apt` is a directory (`d`).
 
@@ -1820,98 +1820,70 @@ The examples provided in this chapter use the `echo` command for demonstration.
 
 The asterisk `*` character is used to represent zero or more of any character in a filename. For example, to display all of the files in the `/etc` directory that begin with the letter `t`:
 
-```
-sysadmin@localhost:~$ echo /etc/t*                              
-/etc/terminfo /etc/timezone /etc/tmpfiles.d
-```
-
 The pattern `t*` matches any file in the `/etc` directory that begins with the character `t` followed by zero or more of any character. In other words, any files that begin with the letter `t`.
 
 You can use the asterisk character at any place within the filename pattern. For example, the following matches any filename in the `/etc` directory that ends with `.d`:
 
 ```
 sysadmin@localhost:~$ echo /etc/*.d                                 
-/etc/apparmor.d /etc/binfmt.d /etc/cron.d /etc/depmod.d /etc/init.d /etc/insserv
-.conf.d /etc/ld.so.conf.d /etc/logrotate.d /etc/modprobe.d /etc/modules-load.d /
-etc/pam.d /etc/profile.d /etc/rc0.d /etc/rc1.d /etc/rc2.d /etc/rc3.d /etc/rc4.d 
-/etc/rc5.d /etc/rc6.d /etc/rcS.d /etc/rsyslog.d /etc/sudoers.d /etc/sysctl.d /et
-c/tmpfiles.d /etc/update-motd.d
-```
-
-In the next example, all of the files in the `/etc` directory that begin with the letter `r` and end with `.conf` are displayed:
-
-```
+sysadmin@localhost:~$ echo /etc/t*    
 sysadmin@localhost:~$ echo /etc/r*.conf                             
-/etc/resolv.conf /etc/rsyslog.conf
+/etc/resolv.conf /etc/rsyslog.conf                          
 ```
+
 
 ## 8.2.2 Question Mark ? Character
 
-The question mark `?` character represents any single character. Each question mark character matches exactly one character, no more and no less.
+The question mark `?` = single character. Each question mark character matches exactly one character, no more and no less.
 
 Suppose you want to display all of the files in the `/etc` directory that begin with the letter `t` and have exactly 7 characters after the `t` character:
 
-```
-sysadmin@localhost:~$ echo /etc/t???????      
-/etc/terminfo /etc/timezone
-```
-
 Glob characters can be used together to find even more complex patterns. The pattern `/etc/*????????????????????` command only matches files in the `/etc` directory with twenty or more characters in the filename:
-
-```
-sysadmin@localhost:~$ echo /etc/*????????????????????            
-/etc/bindresvport.blacklist /etc/ca-certificates.conf
-```
 
 The asterisk and question mark could also be used together to look for files with three-letter extensions by using the `/etc/*.???` pattern:
 
 ```
+sysadmin@localhost:~$ echo /etc/t???????      
+/etc/terminfo /etc/timezone
+sysadmin@localhost:~$ echo /etc/*????????????????????            
+/etc/bindresvport.blacklist /etc/ca-certificates.conf
 sysadmin@localhost:~$ echo /etc/*.???                
 /etc/issue.net /etc/locale.gen
 ```
 
 ## 8.2.3 Bracket [ ] Characters
 
-The bracket `[``]` characters are used to match a single character by representing a range of characters that are possible match characters. For example, the `/etc/[gu]*` pattern matches any file that begins with either a `g` or `u` character and contains zero or more additional characters:
+The bracket `[``]` = match a single character by representing a range of characters that are possible match characters. For example, the `/etc/[gu]*` pattern matches any file that begins with either a `g` or `u` character and contains zero or more additional characters:
+
+Brackets can also be used to a represent a range of characters. For example, the `/etc/[a-d]*` pattern matches all files that begin with any letter between and including a and d:
+
+The `/etc/*[0-9]*` pattern displays any file that contains at least one number:
+
+The range is based on the **ASCII** text table. This table defines a list of characters, arranging them in a specific standard order. If an invalid order is provided, no matches will be made:
 
 ```
 sysadmin@localhost:~$ echo /etc/[gu]*                              
 /etc/gai.conf /etc/groff /etc/group /etc/group- /etc/gshadow /etc/gshadow- /etc/
-gss /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf           
-```
-
-Brackets can also be used to a represent a range of characters. For example, the `/etc/[a-d]*` pattern matches all files that begin with any letter between and including a and d:
-
-```
+gss /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf 
 sysadmin@localhost:~$ echo /etc/[a-d]*
 /etc/adduser.conf /etc/alternatives /etc/apparmor /etc/apparmor.d /etc/apt /etc/
 bash.bashrc /etc/bind /etc/bindresvport.blacklist /etc/binfmt.d /etc/ca-certific
 ates /etc/ca-certificates.conf /etc/calendar /etc/console-setup /etc/cron.d /etc
 /cron.daily /etc/cron.hourly /etc/cron.monthly /etc/cron.weekly /etc/crontab /et
 c/dbus-1 /etc/debconf.conf /etc/debian_version /etc/default /etc/deluser.conf /e
-tc/depmod.d /etc/dhcp /etc/dpkg 
-```
-
-The `/etc/*[0-9]*` pattern displays any file that contains at least one number:
-
-```
+tc/depmod.d /etc/dhcp /etc/dpkg     
 sysadmin@localhost:~$ echo /etc/*[0-9]*                            
 /etc/X11 /etc/dbus-1 /etc/iproute2 /etc/mke2fs.conf /etc/python3 /etc/python3.6 
 /etc/rc0.d /etc/rc1.d /etc/rc2.d /etc/rc3.d /etc/rc4.d /etc/rc5.d /etc/rc6.d  
-```
-
-The range is based on the **ASCII** text table. This table defines a list of characters, arranging them in a specific standard order. If an invalid order is provided, no matches will be made:
-
-```
 sysadmin@localhost:~$ echo /etc/*[9-0]*                           
-/etc/*[9-0]*                                                       
+/etc/*[9-0]*          
 ```
 
 **Note:** The ASCII text table can be viewed in our virtual machines by executing the `ascii` command.
 
 ## 8.2.4 Exclamation Point ! Character
 
-The exclamation point `!` character is used in conjunction with the square brackets to negate a range. For example, the pattern `/etc/[!DP]*` matches any file that does not begin with a `D` or P.
+The exclamation point `!` => used in conjunction with the square brackets to negate a range. For example, the pattern `/etc/[!DP]*` matches any file that does not begin with a `D` or P.
 
 ```
 sysadmin@localhost:~$ echo /etc/[!a-t]*
@@ -1983,18 +1955,15 @@ When the `ls` command sees a filename as an argument, it just displays the filen
 
 This becomes even more confusing in a situation like the following:
 
-```
-sysadmin@localhost:~$ ls /etc/x*                                                
-autostart  systemd  user-dirs.conf  user-dirs.defaults 
-```
-
 In the previous example, it seems like the `ls` command is just plain wrong. However, what really happened is that the only thing that matches the glob `/etc/x*` is the `/etc/xdg` directory.
 
 So, the `ls` command only displayed the files in that directory!
 
-There is a simple solution to this problem: always use the `-d` option with globs, which tells the `ls` command to display the name of directories, instead of their contents:
+> There is a simple solution to this problem: always use the `-d` option with globs, which tells the `ls` command to display the name of directories, instead of their contents:
 
 ```
+sysadmin@localhost:~$ ls /etc/x*                                                
+autostart  systemd  user-dirs.conf  user-dirs.defaults 
 sysadmin@localhost:~$ls -d /etc/x*                                             
 /etc/xdg
 ```
@@ -2018,15 +1987,6 @@ Documents  Music      Public    Videos
 
 **Reminder:** The `~` character represents your home directory.
 
-## 8.3.1 Verbose Mode
-
-The `-v` option causes the `cp` command to produce output if successful. The `-v` option stands for verbose:
-
-```
-sysadmin@localhost:~$ cp -v /etc/hosts ~                              
-`/etc/hosts' -> `/home/sysadmin/hosts'
-```
-
 When the destination is a directory, the resulting new file keeps the same name as the original file. To give the new file a different name, provide the new name as part of the destination:
 
 ```
@@ -2036,46 +1996,43 @@ Desktop    Downloads  Pictures  Templates  hosts
 Documents  Music      Public    Videos     hosts.copy  
 ```
 
+## 8.3.1 Verbose Mode
+
+The `-v` option causes the `cp` command to produce output if successful. The `-v` option stands for verbose:
+
+```
+sysadmin@localhost:~$ cp -v /etc/hosts ~                              
+`/etc/hosts' -> `/home/sysadmin/hosts'
+```
+
 ## 8.3.2 Avoid Overwriting Data
 
 The `cp` command can be destructive to existing data if the destination file already exists. In the case where the destination file exists, the `cp` command overwrites the existing file's contents with the contents of the source file.
 
 To illustrate this potential problem, first a new file is created in the home directory by copying an existing file:
 
+- View the information about the file with `ls` command:
+- View the contents of the file using the `cat` command:
+- In the next example, the `cp` command destroys the original contents of the `example.txt` file:
+- Notice that after the `cp` command is complete, the size of the file has changed and the contents are - different:
+
+
 ```
 sysadmin@localhost:~$ cp /etc/hostname example.txt
-```
-
-View the information about the file with `ls` command:
-
-```
 sysadmin@localhost:~$ ls -l example.txt                                         
 -rw-r--r-- 1 sysadmin sysadmin 10 Dec 15 22:55 example.txt
-```
-
-View the contents of the file using the `cat` command:
-
-```
 sysadmin@localhost:~$ cat example.txt                                           
 localhost     
-```
-
-In the next example, the `cp` command destroys the original contents of the `example.txt` file:
-
-```
 sysadmin@localhost:~$ cp /etc/timezone example.txt
-```
-
-Notice that after the `cp` command is complete, the size of the file has changed and the contents are different:
-
-```
 sysadmin@localhost:~$ ls -l example.txt                                         
 -rw-r--r-- 1 sysadmin sysadmin 8 Dec 15 22:58 example.txt
 sysadmin@localhost:~$ cat example.txt
 Etc/UTC
 ```
 
-Two options can be used to safeguard against accidental overwrites. With the `-i` interactive option, the `cp` command prompts the user before overwriting a file. The following example demonstrates this option, first restoring the content of the original file:
+Two options can be used to safeguard against accidental overwrites. 
+- `-i` interactive option, the `cp` command prompts the user before overwriting a file.
+-  The following example demonstrates this option, first restoring the content of the original file:
 
 ```
 sysadmin@localhost:~$ cp -i /etc/hosts example.txt                   
@@ -2086,6 +2043,10 @@ If a value of `y` (yes) were given, then the copy process would have taken place
 
 The `-i` option requires you to answer `y` or `n` for every copy that could end up overwriting an existing file's contents. This can be tedious when a bunch of overwrites occur, such as the example demonstrated below:
 
+As you can see from the example above, the `cp` command tried to overwrite four existing files, forcing the user to answer four prompts. If this situation happened for 100 files, it could become very annoying, very quickly.
+
+To answer `n` to each prompt automatically, use the `-n` option. It stands for no clobber, or no overwrite.
+
 ```
 sysadmin@localhost:~$ cp -i /etc/skel/.* ~                             
 cp: -r not specified; omitting directory '/etc/skel/.'                          
@@ -2094,13 +2055,6 @@ cp: overwrite `/home/sysadmin/.bash_logout'? n
 cp: overwrite `/home/sysadmin/.bashrc'? n                              
 cp: overwrite `/home/sysadmin/.profile'? n                            
 cp: overwrite `/home/sysadmin/.selected_editor'? n
-```
-
-As you can see from the example above, the `cp` command tried to overwrite four existing files, forcing the user to answer four prompts. If this situation happened for 100 files, it could become very annoying, very quickly.
-
-To answer `n` to each prompt automatically, use the `-n` option. It stands for no clobber, or no overwrite.
-
-```
 sysadmin@localhost:~$ cp -n /etc/skel/.* ~                                      
 cp: -r not specified; omitting directory '/etc/skel/.'                          
 cp: -r not specified; omitting directory '/etc/skel/..'
@@ -2130,6 +2084,11 @@ mv [source] [destination]
 
 In the following example, the `hosts` file that was generated previously is moved from the current directory to the `Videos` directory:
 
+
+When a file is moved, the file is removed from the original location and placed in a new location. Moving files can be somewhat tricky in Linux because users need specific permissions to remove files from a directory. Without the right permissions, a `Permission denied` error message is returned:
+
+Permissions will be covered in detail later in the course.
+
 ```
 sysadmin@localhost:~$ ls                                               
 Desktop    Downloads  Pictures  Templates  example.txt  hosts.copy     
@@ -2139,17 +2098,10 @@ sysadmin@localhost:~$ ls
 Desktop    Downloads  Pictures  Templates  example.txt                 
 Documents  Music      Public    Videos     hosts.copy                 
 sysadmin@localhost:~$ ls Videos                                        
-hosts                                                                 
-```
-
-When a file is moved, the file is removed from the original location and placed in a new location. Moving files can be somewhat tricky in Linux because users need specific permissions to remove files from a directory. Without the right permissions, a `Permission denied` error message is returned:
-
-```
+hosts                   
 sysadmin@localhost:~$ mv /etc/hosts .
-mv: cannot move `/etc/hosts' to `./hosts': Permission denied
+mv: cannot move `/etc/hosts' to `./hosts': Permission denied                                              
 ```
-
-Permissions will be covered in detail later in the course.
 
 ## 8.4.1 Renaming Files
 
@@ -2184,8 +2136,6 @@ Think of the previous `mv` example to mean move the `newexample.txt` file from t
 
 Like the `cp` command, the `mv` command provides the following options:
 
-‌⁠⁠
-
 | Option | Meaning                                                     |
 | :----- | :---------------------------------------------------------- |
 | `-i`   | Interactive: Ask if a file is to be overwritten.            |
@@ -2202,19 +2152,21 @@ There is also a way to create an empty file that can be populated with data at a
 
 To create an empty file, use the `touch` command as demonstrated below:
 
+Notice the size of the new file is `0` bytes. As previously mentioned, the `touch` command doesn't place any data within the new file.
+
 ```
 sysadmin@localhost:~$ touch sample                                     
 sysadmin@localhost:~$ ls -l sample                                     
 -rw-rw-r-- 1 sysadmin sysadmin 0 Nov  9 16:48 sample
 ```
 
-Notice the size of the new file is `0` bytes. As previously mentioned, the `touch` command doesn't place any data within the new file.
-
-Text editors will be covered in detail later in the course.
-
 ## 8.6 Removing Files
 
 To delete a file, use the `rm` command:
+
+Note that the files were deleted with no questions asked. This could cause problems when deleting multiple files by using glob characters. Because these files are deleted without question, a user could end up deleting files that were not intended to be deleted.
+
+**Warning:** The files are permanently deleted. There is no command to undelete a file and no trash can from which to recover deleted files.
 
 ```
 sysadmin@localhost:~$ ls                                               
@@ -2225,10 +2177,6 @@ sysadmin@localhost:~$ rm hosts.copy
 sysadmin@localhost:~$ ls
 Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos 
 ```
-
-Note that the files were deleted with no questions asked. This could cause problems when deleting multiple files by using glob characters. Because these files are deleted without question, a user could end up deleting files that were not intended to be deleted.
-
-**Warning:** The files are permanently deleted. There is no command to undelete a file and no trash can from which to recover deleted files.
 
 As a precaution, users should use the `-i` option when deleting multiple files:
 
@@ -2250,14 +2198,11 @@ Documents  Music      Public    Videos
 
 You can delete directories using the `rm` command. However, the default behavior (no options) of the `rm` command is to not delete directories:
 
-```
-sysadmin@localhost:~$ rm Videos                                        
-rm: cannot remove `Videos': Is a directory                            
-```
-
 To delete a directory with the `rm` command, use the `-r` recursive option:
 
 ```
+sysadmin@localhost:~$ rm Videos                                        
+rm: cannot remove `Videos': Is a directory  
 sysadmin@localhost:~$ ls                                               
 Desktop    Downloads  Pictures  Templates  sample.txt                  
 Documents  Music      Public    Videos                                 
@@ -2287,3 +2232,396 @@ sysadmin@localhost:~$ ls
 Desktop    Downloads  Pictures  Templates   test                       
 Documents  Music      Public    sample.txt
 ```
+
+# chapter 9 - archiving and compression
+
+## 9.1 Introduction
+
+In this chapter, we discuss how to manage archive files at the command line. File archiving is used when one or more files need to be transmitted or stored as efficiently as possible. There are two fundamental aspects which this chapter explores:
+
+- **Archiving**: Combines multiple files into one, which eliminates the overhead in individual files and makes the files easier to transmit.
+- **Compression**: Makes the files smaller by removing redundant information.
+
+> Files can be compressed individually, or multiple files can be combined into a single archive and then subsequently compressed. The latter is still referred to as archiving.
+
+When an archive is decompressed, and one or more files are extracted, this is called **un-archiving**.
+
+Even though disk space is relatively cheap, archiving and compression still have value:
+
+- When making a large number of files available, such as the source code to an application or a collection of documents, it is easier for people to download a compressed archive than it is to download files individually.
+- Log files have a habit of filling disks, so it is helpful to split them by date and compress older versions.
+- When backing up directories, it is easier to keep them all in one archive than it is to version (update) each file.
+- Some streaming devices such as tapes perform better if you’re sending a stream of data rather than individual files.
+- It can often be faster to compress a file before sending it to a tape drive or over a slower network and decompress it at the other end than it would be to send it uncompressed.
+It is essential for Linux administrators to become familiar with the tools for archiving and compressing files.
+
+Linux in space! Linux goes where no man has gone before. 32 space missions completed with Linux. Linux is helping NASA's Curiosity Rover explore Mars. SpaceX uses Linux on the Dragon and Falcon 9 spacecraft.
+
+
+## 9.2 Compressing Files
+
+Compression reduces the amount of data needed to store or transmit a file while storing it in such a way that the file can be restored. A file with human-readable text might have frequently used words replaced by something smaller, or an image with a solid background might represent patches of that color by a code. The compressed version of the file is not typically viewed or utilized, instead, it is **decompressed** before use.
+
+The compression algorithm is a procedure the computer uses to encode the original file, and as a result, make it smaller. Computer scientists research these algorithms and come up with better ones that can work faster or make the input file smaller.
+
+When talking about compression, there are two types:
+
+- **Lossless**: No information is removed from the file. Compressing a file and decompressing it leaves something identical to the original.
+- **Lossy**: Information might be removed from the file. It is compressed in such a way that uncompressing a file will result in a file that is slightly different from the original. For instance, an image with two subtly different shades of green might be made smaller by treating those two shades as the same. Often, the eye can’t pick out the difference anyway.
+
+Generally, human eyes and ears don’t notice slight imperfections in pictures and audio, especially as they are displayed on a monitor or played over speakers. Lossy compression often benefits media because it results in smaller file sizes and people can’t tell the difference between the original and the version with the changed data. For things that must remain intact, such as documents, logs, and software, you need lossless compression.
+
+Most image formats, such as GIF, PNG, and JPEG, implement some form of lossy compression. You can generally decide how much quality you want to preserve. A lower quality results in a smaller file, but after decompression, you may notice artifacts such as rough edges or discolorations. High quality will look much like the original image, but the file size will be closer to the original.
+
+Compressing an already compressed file will not make it smaller. This fact is often forgotten when it comes to images since they are already stored in a compressed format. With lossless compression, this multiple compression is not a problem, but if you compress and decompress a file several times using a lossy algorithm, you will eventually have something that is unrecognizable.
+
+Linux provides several tools to compress files; the most common is gzip. Here we show a file before and after compression:
+
+The gzip command will provide this information, by using the –l option, as shown here:
+
+
+```bash
+sysadmin@localhost:~$ cd Documents
+sysadmin@localhost:~/Documents$ ls -l longfile*
+-rw-r--r-- 1 sysadmin sysadmin 66540 Dec 20  2017 longfile.txt
+sysadmin@localhost:~/Documents$ gzip longfile.txt
+sysadmin@localhost:~/Documents$ ls -l longfile*
+-rw-r--r-- 1 sysadmin sysadmin 341 Dec 20  2017 longfile.txt.gz
+sysadmin@localhost:~/Documents$ gzip -l longfile.txt.gz
+         compressed        uncompressed  ratio uncompressed_name
+                341               66540  99.5% longfile.txt
+```
+
+In the preceding example, there is a file called longfile.txt that is 66540 bytes. The file is compressed by invoking the gzip command with the name of the file as the only argument. After that command completes, the original file is gone, and a compressed version with a file extension of .gz is left in its place. The file size is now 341 bytes.
+
+The compression ratio is given as 99.5%, an impressive reduction helped by the repetitive information in the original file. Additionally, when the file is decompressed, it will be called longfile.txt again.
+
+Compressed files can be restored to their original form using either the gunzip command or the gzip –d command. This process is called **decompression**. After gunzip does its work, the longfile.txt file is restored to its original size and file name.
+
+sysadmin@localhost:~/Documents$ gunzip longfile.txt.gz
+sysadmin@localhost:~/Documents$ ls -l longfile*
+-rw-r--r-- 1 sysadmin sysadmin 66540 Dec 20  2017 longfile.txt
+
+
+> The gunzip command is just a script that calls gzip with the right parameters.
+
+There are other commands that operate virtually identically to gzip and gunzip. There is bzip2 and bunzip2, as well as xz and unxz.
+
+The gzip command uses the Lempel-Ziv data compression algorithm, while the bzip utilities use a different compression algorithm called Burrows-Wheeler block sorting, which can compress files smaller than gzip at the expense of more CPU time. These files can be recognized because they have a .bz or .bz2 extension instead of a .gz extension.
+
+The xz and unxz tools are functionally similar to gzip and gunzip in that they use the Lempel-Ziv-Markov (LZMA) chain algorithm, which can result in lower decompression CPU times that are on par with gzip while providing the better compression ratios typically associated with the bzip2 tools. Files compressed with the xz command use the .xz extension.
+
+## 9.3 Archiving Files
+
+If you had several files to send to someone, you could choose to compress each one individually. You would have a smaller amount of data in total than if you sent uncompressed files, however, you would still have to deal with many files at one time.
+
+Archiving is the solution to this problem. The traditional UNIX utility to archive files is called tar, which is a short form of TApe aRchive. It was used to stream many files to a tape for backups or file transfer. The tar command takes in several files and creates a single output file that can be split up again into the original files on the other end of the transmission.
+
+The tar command has three modes that are helpful to become familiar with:
+
+- Create: Make a new archive out of a series of files.
+- Extract: Pull one or more files out of an archive.
+- List: Show the contents of the archive without extracting.
+
+> Remembering the modes is key to figuring out the command line options necessary to do what you want. In addition to the mode, remember where to specify the name of the archive, as you may be entering multiple file names on a command line.
+
+### 9.3.1 Create Mode
+
+Creating an archive with the tar command requires two named options:
+
+Option	Function
+- c Create an archive.
+- f ARCHIVE	
+Use archive file.
+
+```bash
+tar -c [-f ARCHIVE] [OPTIONS] [FILE...]
+```
+
+The argument ARCHIVE will be the name of the resulting archive file.
+
+All the remaining arguments are considered as input file names, either as a wildcard, a list of files, or both.
+
+The following example shows a tar file, also called a tarball, being created from multiple files. The first argument creates an archive called alpha_files.tar. The wildcard option * is used to include all files that begin with alpha in the archive:
+
+```bash
+sysadmin@localhost:~/Documents$ tar -cf alpha_files.tar alpha*
+sysadmin@localhost:~/Documents$ ls -l alpha_files.tar
+-rw-rw-r-- 1 sysadmin sysadmin 10240 Oct 31 17:07 alpha_files.tar
+```    
+
+The final size of alpha_files.tar is 10240 bytes. Normally, tarball files are slightly larger than the combined input files due to the overhead information on recreating the original files. Tarballs can be compressed for easier transport, either by using gzip on the archive or by having tar do it with the -z option.
+
+Option	Function
+-z	Compress (or decompress) an archive using the gzip command.
+The next example shows the same command as the prior example, but with the addition of the -z option.
+
+```bash 
+sysadmin@localhost:~/Documents$ tar -czf alpha_files.tar.gz alpha*
+sysadmin@localhost:~/Documents$ ls -l alpha_files.tar.gz
+-rw-rw-r-- 1 sysadmin sysadmin 417 Oct 31 17:15 alpha_files.tar.gz
+```
+
+The output is much smaller than the tarball itself, and the resulting file is compatible with gzip, which can be used to view the compression details. The uncompressed file is the same size as it would be if you tarred it in a separate step:
+
+```bash
+sysadmin@localhost:~/Documents$ gzip -l alpha_files.tar.gz
+         compressed        uncompressed  ratio uncompressed_name
+                417               10240  96.1% alpha_files.tar
+```
+
+While file extensions don’t affect the way a file is treated, the convention is to use .tar for tarballs, and .tar.gz or .tgz for compressed tarballs.
+
+The bzip2 compression can be used instead of gzip by substituting the -j option for the -z option and using .tar.bz2, .tbz, or .tbz2 as the file extension.
+
+Option	Function
+-j	Compress (or decompress) an archive using the bzip2 command.
+For example, to archive and compress the School directory:
+
+```bash
+sysadmin@localhost:~/Documents$ bzip2 -cjf folders.tbz School
+```
+
+### 9.3.2 List Mode
+
+```bash
+tar -t [-f ARCHIVE] [OPTIONS]
+```
+
+Given a tar archive, compressed or not, you can see what’s in it by using the -t option. The next example uses three options:
+
+Option	Function
+-t	List the files in an archive.
+-j	Decompress with an bzip2 command.
+-f ARCHIVE	Operate on the given archive.
+To list the contents of the folders.tbz archive:
+
+```bash
+sysadmin@localhost:~/Documents$ tar -tjf folders.tbz
+School/
+School/Engineering/
+School/Engineering/hello.sh
+School/Art/
+School/Art/linux.txt
+School/Math/
+School/Math/numbers.txt
+```
+In the example, the directory School/ is prefixed to the files. The tar command will recurse into subdirectories automatically when compressing and will store the path info inside the archive.
+
+
+> To show that this file is still nothing special, we will list the contents of the file in two steps using a pipeline, the | character.
+
+```shell
+sysadmin@localhost:~/Documents$ bunzip2 -c folders.tbz | tar -t
+School/
+School/Engineering/
+School/Engineering/hello.sh
+School/Art/
+School/Art/linux.txt
+School/Math/
+School/Math/numbers.txt
+```
+
+The left side of the pipeline is bunzip2 –c folders.tbz, which decompresses the file, but the -c option sends the output to the screen. The output is redirected to tar –t. 
+
+If you don’t specify a file with –f then tar will read from the standard input, which in this case is the uncompressed file.
+
+Pipes and standard inputs will be covered in detail later in the course.
+
+### 9.3.3 Extract Mode
+
+```bash
+tar -x [-f ARCHIVE] [OPTIONS]
+```
+
+Creating archives is often used to make multiple files easier to move. Before extracting the files, relocate them to the Downloads directory:
+
+```bash
+sysadmin@localhost:~/Documents$ cd ~
+sysadmin@localhost:~$ cp Documents/folders.tbz Downloads/folders.tbz
+sysadmin@localhost:~$ cd Downloads
+```
+
+Finally, you can extract the archive with the –x option once it’s copied into a different directory. The following example uses a similar pattern as before, specifying the operation, the compression, and a file name to operate on.
+
+Option	Function
+- x Extract files from an archive.
+- j Decompress with the bzip2 command.
+- f ARCHIVE Operate on the given archive.
+
+```bash
+sysadmin@localhost:~/Downloads$ tar -xjf folders.tbz
+sysadmin@localhost:~/Downloads$ ls -l
+total 8
+drwx------ 5 sysadmin sysadmin 4096 Dec 20  2017 School
+-rw-rw-r-- 1 sysadmin sysadmin  413 Oct 31 18:37 folders.tbz
+sysadmin@localhost:~/Downloads$ cd School
+sysadmin@localhost:~/Downloads/School$ ls -l
+total 12
+drwx------ 2 sysadmin sysadmin 4096 Oct 31 17:45 Art
+drwx------ 2 sysadmin sysadmin 4096 Oct 31 17:47 Engineering
+drwx------ 2 sysadmin sysadmin 4096 Oct 31 17:46 Math
+sysadmin@localhost:~/Downloads$ tar -xjvf folders.tbz
+School/
+School/Engineering/
+School/Engineering/hello.sh
+School/Art/
+School/Art/linux.txt
+School/Math/
+School/Math/numbers.txt
+```
+
+The original file is untouched, and the new directory is created. Inside the directory, are the original directories and files.
+
+Add the –v flag and you will get a verbose output of the files processed, making it easier to keep track of what's happening:
+
+Option	Function
+-v	Verbosely list the files processed.
+The next example repeats the prior example, but with the addition of the –v option:
+
+It is important to keep the –f flag **at the end,** as tar assumes whatever follows this option is a file name. In the next example, the –f and –v flags were transposed, leading to tar interpreting the command as an operation on a file called v, which does not exist.
+
+```bash
+sysadmin@localhost:~/Downloads$ tar -xjfv folders.tbz 
+tar (child): v: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
+```
+If you only want some files out of the archive, add their names to the end of the command, but by default, they must match the name in the archive exactly, or use a pattern.
+
+The following example shows the same archive as before, but extracting only the School/Art/linux.txt file. The output of the command (as verbose mode was requested with the –v flag) shows only the one file has been extracted:
+
+```bash
+sysadmin@localhost:~/Downloads$ tar -xjvf folders.tbz School/Art/linux.txt
+School/Art/linux.txt
+``` 
+
+The tar command has many more features, such as the ability to use patterns when extracting files, excluding certain files, or outputting the extracted files to the screen instead of disk. The documentation for tar has in-depth information.
+
+
+## 9.4 ZIP Files
+
+The de facto archiving utility in Microsoft is the ZIP file. ZIP is not as prevalent in Linux but is well supported by the zip and unzip commands. Albeit, with tar and gzip/gunzip the same commands and options can be used interchangeably to do the creation and extraction, but this is not the case with zip. The same option has different meanings for the two different commands.
+
+The default mode of zip is to add files to an archive and compress it.
+
+```bash
+zip [OPTIONS] [zipfile [file…]]
+```
+
+The first argument zipfile is the name of the archive to be created, after that, a list of files to be added. The following example shows a compressed archive called alpha_files.zip being created:
+
+```bash
+sysadmin@localhost:~/Documents$ zip alpha_files.zip alpha*
+  adding: alpha-first.txt (deflated 32%)
+  adding: alpha-second.txt (deflated 36%)
+  adding: alpha-third.txt (deflated 48%)
+  adding: alpha.txt (deflated 53%)
+  adding: alpha_files.tar.gz (stored 0%) 
+```
+The output shows the files and the compression ratio.
+
+It should be noted that tar requires the –f option to indicate a filename is being passed, while zip and unzip require a filename and therefore don’t need you to inform the command a filename is being passed.
+
+The zip command will not recurse into subdirectories by default, which is different behavior than the tar command. That is, merely adding School will only add the empty directory and not the files under it. If you want tar like behavior, 
+
+- you must use the –r option to indicate recursion is to be used:
+
+```bash
+sysadmin@localhost:~/Documents$ zip -r School.zip School
+updating: School/ (stored 0%)
+updating: School/Engineering/ (stored 0%)
+updating: School/Engineering/hello.sh (deflated 88%)
+updating: School/Art/ (stored 0%)
+updating: School/Art/linux.txt (deflated 49%)
+updating: School/Math/ (stored 0%)
+updating: School/Math/numbers.txt (stored 0%)
+  adding: School/Art/red.txt (deflated 33%)
+  adding: School/Art/hidden.txt (deflated 1%)
+  adding: School/Art/animals.txt (deflated 2%)
+```
+
+In the example above, all files under the School directory are added because it uses the –r option. The first lines of output indicate that directories were added to the archive, but otherwise the output is similar to the previous example.
+
+The –l list option of the unzip command lists files in .zip archives:
+
+```bash
+sysadmin@localhost:~/Documents$ unzip -l School.zip
+Archive:  School.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  2017-12-20 16:46   School/
+        0  2018-10-31 17:47   School/Engineering/
+      647  2018-10-31 17:47   School/Engineering/hello.sh
+        0  2018-10-31 19:31   School/Art/
+       83  2018-10-31 17:45   School/Art/linux.txt
+        0  2018-10-31 17:46   School/Math/
+       10  2018-10-31 17:46   School/Math/numbers.txt
+       51  2018-10-31 19:31   School/Art/red.txt
+       67  2018-10-31 19:30   School/Art/hidden.txt
+       42  2018-10-31 19:31   School/Art/animals.txt
+---------                     -------
+      900                     10 files
+        0  2018-10-31 17:46   School/Math/
+       10  2018-10-31 17:46   School/Math/numbers.txt
+---------                     -------
+      740                     7 files
+sysadmin@localhost:~/Documents$ unzip School.zip
+Archive:  School.zip
+replace School/Engineering/hello.sh? [y]es, [n]o, [A]ll, [N]one, [r]ename: n
+replace School/Art/linux.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: n
+replace School/Math/numbers.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: n
+replace School/Art/red.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: n
+replace School/Art/hidden.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: n
+replace School/Art/animals.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: n
+```
+
+Extracting the files is just like creating the archive, as the default operation of the unzip command is to extract. It gives several options if unzipping files will overwrite existing ones:
+
+This can be avoided by copying the zip file into a new directory:
+
+```bash
+sysadmin@localhost:~/Documents$ mkdir tmp
+sysadmin@localhost:~/Documents$ cp School.zip tmp/School.zip
+sysadmin@localhost:~/Documents$ cd tmp
+sysadmin@localhost:~/Documents/tmp$ unzip School.zip
+Archive:  School.zip
+   creating: School/
+   creating: School/Engineering/
+  inflating: School/Engineering/hello.sh
+   creating: School/Art/
+  inflating: School/Art/linux.txt
+   creating: School/Math/
+ extracting: School/Math/numbers.txt
+  inflating: School/Art/red.txt
+  inflating: School/Art/hidden.txt
+  inflating: School/Art/animals.txt
+```
+
+Here, we extract all the files in the archive to the current directory. Just like tar, you can pass filenames on the command line. The examples below show three different attempts to extract a file.
+
+First, just the name of the file is passed without the directory component. Like tar, the file is not matched.
+A second attempt passes the directory component along with the file name, which extracts just that file.
+The third version uses a wildcard, which extracts the four files matching the pattern, just like tar.
+
+```bash
+sysadmin@localhost:~/Documents/tmp$ unzip School.zip linux.txt
+Archive:  School.zip
+caution: filename not matched:  linux.txt
+sysadmin@localhost:~/Documents/tmp$ unzip School.zip School/Math/numbers.txt
+Archive:  School.zip
+ extracting: School/Math/numbers.txt
+sysadmin@localhost:~/Documents/tmp$ unzip School.zip School/Art/*t
+Archive:  School.zip
+  inflating: School/Art/linux.txt
+  inflating: School/Art/red.txt
+  inflating: School/Art/hidden.txt
+  inflating: School/Art/animals.txt
+```
+
+
+
+
+
+The zip and unzip man pages describe the other things you can do with these tools, such as replace files within the archive, use different compression levels, and even use encryption.
